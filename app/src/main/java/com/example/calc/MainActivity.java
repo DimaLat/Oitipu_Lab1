@@ -1,5 +1,6 @@
 package com.example.calc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -21,6 +22,19 @@ public class MainActivity extends AppCompatActivity {
     TextView tvInput, tvOutput;
     Calculator calc = Calculator.createDefaultCalculator();
     String s, message;
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("tvInput",tvInput.getText().toString());
+    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         tvInput = findViewById(R.id.tvInput);
         tvOutput = findViewById(R.id.tvOutput);
+
+        if (savedInstanceState != null){
+            tvInput.setText(savedInstanceState.getString("tvInput"));
+        }
 
         btnClear.setOnClickListener(new View.OnClickListener(){
             @Override
